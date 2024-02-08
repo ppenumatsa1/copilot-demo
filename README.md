@@ -1,1 +1,1 @@
-# copilot-demo
+# Copilot-Demo
