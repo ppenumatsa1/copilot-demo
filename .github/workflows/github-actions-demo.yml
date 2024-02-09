@@ -8,7 +8,7 @@ on:
 # Setting environment variables at the workflow level
 env:
   RESOURCE_GROUP: rg-copilot-demo # The name of your Azure resource group
-  CONTAINER_APP_NAME: aca-demo-0208 # The name of your Azure Container App
+  CONTAINER_APP_NAME: aca-demo-${{ github.run_id }} # The name of your Azure Container App
   ENVIRONMENT_NAME: managedEnvironment-rgcopilotdemo-89d7 # The name of your Azure Container Apps environment
   ACR_LOGIN_SERVER: demoacr0207.azurecr.io # The login server of your Azure Container Registry
   IMAGE_NAME: my-fastapi-app # The name of your Docker image
