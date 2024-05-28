@@ -21,6 +21,15 @@ class Todo(BaseModel):
 
 @app.post("/todo/", response_model=Todo)
 async def create_todo(todo: Todo):
+    """
+    Create a new todo item.
+
+    Args:
+        todo (Todo): The todo item to be created.
+
+    Returns:
+        Todo: The created todo item.
+    """
     todos.append(todo.model_dump())
     return todo
 
@@ -29,44 +38,44 @@ async def create_todo(todo: Todo):
 
 @app.get("/todo/", response_model=list[Todo])
 async def get_todos():
+    """
+    Retrieve a list of todos.
+
+    Returns:
+        list[Todo]: A list of todos.
+    """
     return todos
 
-# This route returns a todo by id
+# This route returns a single todo
 
 
 @app.get("/todo/{todo_id}", response_model=Todo)
-async def get_todo(todo_id: int):
+async def get_todo_by_id(todo_id: int):
     """
-    Retrieve a specific todo by its ID.
+    Retrieve a todo by its ID.
 
-    Parameters:
-    - todo_id (int): The ID of the todo to retrieve.
+    Args:
+        todo_id (int): The ID of the todo to retrieve.
 
     Returns:
-    - Todo: The todo object matching the given ID.
-
-    Raises:
-    - HTTPException: If no todo with the given ID is found, a 404 error is raised.
+        Todo: The todo item with the specified ID.
     """
     for todo in todos:
         if todo['id'] == todo_id:
             return todo
-    # If no todo with this id exists, return a 404
     raise HTTPException(status_code=404, detail="Todo not found")
 
-# This route allows updating a todo by id
 
-
+# This route allows updating a todo
 @app.put("/todo/{todo_id}", response_model=Todo)
 async def update_todo(todo_id: int, todo: Todo):
     for index, t in enumerate(todos):
         if t['id'] == todo_id:
             todos[index] = todo.model_dump()
             return todo
-    # If no todo with this id exists, return a 404
     raise HTTPException(status_code=404, detail="Todo not found")
 
-# This route allows deleting a todo by id
+# This route allows deleting a todo
 
 
 @app.delete("/todo/{todo_id}")
